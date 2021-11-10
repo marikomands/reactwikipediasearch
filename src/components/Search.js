@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const Search = () => {
-  const [term, setTerm] = useState("programing");
-  const [result, setResults] = useState([]);
+  const [term, setTerm] = useState("");
+  const [results, setResults] = useState([]);
+  console.log("🚀 ~ Search ~ results", results);
 
   useEffect(() => {
     const search = async () => {
+      console.log("🚀 ~ search ~ term", term);
       const { data } = await axios.get("https://en.wikipedia.org/w/api.php", {
         params: {
           action: "query",
@@ -16,11 +18,13 @@ const Search = () => {
           srsearch: term,
         },
       });
-      setResults(data.query.search);
 
-      console.log("🚀 ~ search ~ data", data);
+      setResults(data.query.search);
     };
-    search();
+
+    if (term) {
+      search();
+    }
   }, [term]);
 
   return (
