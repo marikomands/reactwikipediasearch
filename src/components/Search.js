@@ -3,12 +3,12 @@ import axios from "axios";
 
 const Search = () => {
   const [term, setTerm] = useState("");
+  console.log("🚀 ~ Search ~ term", term);
   const [results, setResults] = useState([]);
   console.log("🚀 ~ Search ~ results", results);
 
   useEffect(() => {
-    const search = async () => {
-      console.log("🚀 ~ search ~ term", term);
+    const search = async (term) => {
       const { data } = await axios.get("https://en.wikipedia.org/w/api.php", {
         params: {
           action: "query",
@@ -23,9 +23,28 @@ const Search = () => {
     };
 
     if (term) {
-      search();
+      search(term);
     }
   }, [term]);
+
+  const renderedResults = results.map((results) => {
+    return (
+      <div key={results.pageid} className="item">
+        <div className="right floated content">
+          <a
+            className="ui button"
+            href={`http://en.wikipedia.org?curid=${results.pageid}`}
+          >
+            Go
+          </a>
+        </div>
+        <div className="content">
+          <div className="header">{results.title}</div>
+          <spn dangerouslySetInnerHTML={{ __html: results.snippet }}></spn>
+        </div>
+      </div>
+    );
+  });
 
   return (
     <div>
@@ -38,6 +57,7 @@ const Search = () => {
           className="input"
         />
       </div>
+      <div className="ui celled list">{renderedResults}</div>
     </div>
   );
 };
