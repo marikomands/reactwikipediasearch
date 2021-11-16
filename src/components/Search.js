@@ -18,13 +18,18 @@ const Search = () => {
           srsearch: term,
         },
       });
-
       setResults(data.query.search);
     };
 
-    if (term) {
-      search(term);
-    }
+    const timeoutid = setTimeout(() => {
+      if (term) {
+        search(term);
+      }
+    }, 1000);
+
+    return () => {
+      clearTimeout(timeoutid);
+    };
   }, [term]);
 
   const renderedResults = results.map((results) => {
