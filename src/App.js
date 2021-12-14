@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Accordion from "./components/Accordion";
 import Search from "./components/Search";
 import Dropdown from "./components/Dropdown";
-import reactDom from "react-dom";
+import Translate from "./components/Translate";
 
 const items = [
   {
@@ -15,7 +15,7 @@ const items = [
   },
   {
     title: "How do you use React?",
-    content: "You use React by creating components",
+    content: "You use React by creating  components",
   },
 ];
 
@@ -35,24 +35,9 @@ const options = [
 ];
 
 export default () => {
-  const [selected, setSelected] = useState(options[0]);
-  const [showDropdown, setShowDropdown] = useState(true);
-  console.log("🚀 ~ showDropdown", showDropdown);
-  console.log("🚀 ~ setShowDropdown", setShowDropdown);
-
   return (
     <div>
-      <button onClick={() => setShowDropdown(!showDropdown)}>
-        Toggle Dropdown
-      </button>
-
-      {showDropdown ? (
-        <Dropdown
-          selected={selected}
-          onSelectedChange={setSelected}
-          options={options}
-        />
-      ) : null}
+      <Translate />
     </div>
   );
 };
